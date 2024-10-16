@@ -30,7 +30,9 @@ def parse_position(positions):
 	with open(data_position, 'r') as f: #ouverture du fichier pospoints.txt
 		for l in f: 
 			g=l.split(";")
-			station_name = g[2].replace("@", " ").replace("\n", "")
-			positions[station_name] = {"LAT": float(g[0]), "LONG": float(g[1])}
+			station_name = g[2].replace("@", " ").strip()
+			ctc={"nomSommet" : "".join(station_name), "LAT" : int(g[0]), "LONG" : int(g[1]) }
+			print(ctc)
+			positions.append(ctc)
 
 
