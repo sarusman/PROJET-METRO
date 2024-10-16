@@ -21,11 +21,11 @@ def parse_metro(sommets, arretes):
 				g = l.split(';')
 				dir_info = g[2].split(" ")[2][0] if len(g[2].split(" ")) > 2 else g[2].split(" ")[1][0]
 				ctc = {
-					"NS": int(g[0].split()[1]), 
+					"numSommet": int(g[0].split()[1]), 
 					"nomSommet": " ".join(g[0].split()[2:]), 
 					"numLigne": g[1], 
-					"IsTerminus": g[2].split()[0], 
-					"dir": dir_info
+					"isTerminus": g[2].split()[0], 
+					"direction": dir_info
 				}
 				sommets.append(ctc)  # Ajouter le sommet a la liste
 
