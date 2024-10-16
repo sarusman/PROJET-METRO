@@ -25,7 +25,6 @@ def parse_metro(sommets, arretes):
 				g=l.split(' ') # separer la ligne par les ' '
 				ctc={"S1": int(g[1]),"S2":int(g[2]), "poid":int(g[3][0:-1])}
 				arretes.append(ctc) # ajouter l'arrete a la liste
-			print(ctc)
 
 def parse_position(positions):
 	with open(data_position, 'r') as f: #ouverture du fichier pospoints.txt
@@ -33,6 +32,5 @@ def parse_position(positions):
 			g=l.split(";")
 			station_name = g[2].replace("@", " ").replace("\n", "")
 			positions[station_name] = {"LAT": float(g[0]), "LONG": float(g[1])}
-			print(station_name + " : " + str({"LAT": float(g[0]), "LONG": float(g[1])}))
 
 
