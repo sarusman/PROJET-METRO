@@ -4,21 +4,29 @@ data="src/metro.txt"
 
 sommets=[]
 arrete=[]
-def main():
+def parse_sommets():
 	with open(data, 'r') as f:
-		for _ in range(14):
+		for _ in range(13):
 			next(f) # Pour sauter la consigne
 		for l in f:
 			if (l[0]=='V'):
 				g=l.split(';')
-				ctc={"NS":int(g[0].split(" ")[1]), "nomSommet":g[0].split(" ")[1:], "numLigne":g[1], "IsTerminus":g[2].split(" ")[0], "dir":g[2].split(" ")[1]}
-				print(ctc)
+				if (g[2].split(" ")[1]==""):
+					ctc={"NS":int(g[0].split(" ")[1]), "nomSommet":" ".join(g[0].split(" ")[2:]), "numLigne":g[1], "IsTerminus":g[2].split(" ")[0], "dir":g[2].split(" ")[2][0]}
+				else:
+					ctc={"NS":int(g[0].split(" ")[1]), "nomSommet":" ".join(g[0].split(" ")[2:]), "numLigne":g[1], "IsTerminus":g[2].split(" ")[0], "dir":g[2].split(" ")[1][0]}
 				sommets.append(ctc)
 				#{"NS":entier, "nomSommet":str, "numLigne":str, "NbBranchement":entier, "dir":entier}
+				#V 0017 Bastille ;5 ;False 
 
-print(sommets)
-#V 0017 Bastille ;5 ;False 0
-			
+			elif (l[0]=='E'):
+				g=l.split(' ')
+				ctc={"S1": int(g[1]),"S2":int(g[2]), "poid":int(g[3][0:-1])}
+				#E 232 348 46
+				arrete.append(ctc)
+				#ARRETE : {"S1":entier, "S2":entier, "poid":entier}
+			print(ctc)
 
 
-main()
+parse_sommets()
+#print(sommets)
