@@ -9,22 +9,34 @@ data_position="src/pospoints.txt" #fichier avec les positions
 
 
 def parse_metro(sommets, arretes):
-	with open(data_metro, 'r') as f: # ouverture du fichier metro.txt
-		for _ in range(13): #sauter les lignes avec les consignes
-			next(f) 
-		for l in f: # pour chaque ligne
-			if (l[0]=='V'): # si la ligne commance par un V
-				g=l.split(';') # separer la ligne par les ';'
-				if (g[2].split(" ")[1]==""):
-					ctc={"NS":int(g[0].split(" ")[1]), "nomSommet":"".join(g[0].split(" ")[2:]), "numLigne":g[1], "IsTerminus":g[2].split(" ")[0], "dir":g[2].split(" ")[2][0]}
-				else:
-					ctc={"NS":int(g[0].split(" ")[1]), "nomSommet":"".join(g[0].split(" ")[2:]), "numLigne":g[1], "IsTerminus":g[2].split(" ")[0], "dir":g[2].split(" ")[1][0]}
-					sommets.append(ctc) # ajouter le sommet a la liste
+	with open(data_metro, 'r') as f:  # ouverture du fichier metro.txt
+    # Ignorer les 13 premières lignes
+		for _ in range(13):
+			next(f)
 
-			elif (l[0]=='E'):  # si la ligne commance par un E
-				g=l.split(' ') # separer la ligne par les ' '
-				ctc={"S1": int(g[1]),"S2":int(g[2]), "poid":int(g[3][0:-1])}
-				arretes.append(ctc) # ajouter l'arrete a la liste
+		# Parcourir le fichier
+		for l in f:
+			l = l.strip()  # Enlever les espaces et retours a la ligne inutiles
+			if l.startswith('V'):  # Si la ligne commence par 'V'
+				g = l.split(';')
+				dir_info = g[2].split(" ")[2][0] if len(g[2].split(" ")) > 2 else g[2].split(" ")[1][0]
+				ctc = {
+					"numSommet": int(g[0].split()[1]), 
+					"nomSommet": " ".join(g[0].split()[2:]), 
+					"numLigne": g[1], 
+					"isTerminus": g[2].split()[0], 
+					"direction": dir_info
+				}
+				sommets.append(ctc)  # Ajouter le sommet a la liste
+
+			elif l.startswith('E'):  # Si la ligne commence par 'E'
+				g = l.split()
+				ctc = {
+					"S1": int(g[1]), 
+					"S2": int(g[2]), 
+					"poid": int(g[3])
+				}
+				arretes.append(ctc)  # Ajouter l'arrete à la liste
 
 def parse_position(positions):
 	with open(data_position, 'r') as f: #ouverture du fichier pospoints.txt
