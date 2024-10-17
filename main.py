@@ -1,11 +1,15 @@
 import pandas as pd
 
-data="src/metro.txt"
+data_metro="src/metro.txt"
+data_position="src/pospoints.txt"
 
 sommets=[]
 arrete=[]
-def parse_sommets():
-	with open(data, 'r') as f:
+
+position={} #{"STATION": {"LAT": 14, "LONG": 43}}
+
+def parse_metro():
+	with open(data_metro, 'r') as f:
 		for _ in range(13):
 			next(f) # Pour sauter la consigne
 		for l in f:
@@ -27,6 +31,13 @@ def parse_sommets():
 				#ARRETE : {"S1":entier, "S2":entier, "poid":entier}
 			print(ctc)
 
+def parse_position():
+	with open(data_position, 'r') as f:
+		for l in f:
+			g=l.split(";")
+			position[g[2].replace("@", " ").replace("\n", "")]={"LAT":float(g[0]), "LONG":float(g[1])}
 
-parse_sommets()
+parse_metro()
+parse_position()
+print(position)
 #print(sommets)
