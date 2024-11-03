@@ -23,7 +23,7 @@ def parse_metro(sommets, arretes):
 				ctc = {
 					"numSommet": int(g[0].split()[1]), 
 					"nomSommet": " ".join(g[0].split()[2:]), 
-					"numLigne": g[1], 
+					"numLigne": g[1].strip(), 
 					"isTerminus": g[2].split()[0], 
 					"direction": dir_info
 				}
