@@ -1,43 +1,47 @@
 import pandas as pd
 
-data_metro="src/metro.txt"
-data_position="src/pospoints.txt"
+data_metro="src/metro.txt" #fichier avec les donnees des sommets et des arretes
+data_position="src/pospoints.txt" #fichier avec les positions
 
-sommets=[]
-arrete=[]
+#Structure utiliser pour les sommets : {"NS":entier, "nomSommet":str, "numLigne":str, "NbBranchement":entier, "dir":entier}
+#Structure utiliser pour les arretes : {"S1":entier, "S2":entier, "poid":entier}
+#Structure utiliser pour les positions : {"STATION": {"LAT": 14, "LONG": 43}}
 
-position={} #{"STATION": {"LAT": 14, "LONG": 43}}
 
-def parse_metro():
-	with open(data_metro, 'r') as f:
+def parse_metro(sommets, arretes):
+	with open(data_metro, 'r') as f:  # ouverture du fichier metro.txt
+    # Ignorer les 13 premières lignes
 		for _ in range(13):
-			next(f) # Pour sauter la consigne
-		for l in f:
-			if (l[0]=='V'):
-				g=l.split(';')
-				if (g[2].split(" ")[1]==""):
-					ctc={"NS":int(g[0].split(" ")[1]), "nomSommet":" ".join(g[0].split(" ")[2:]), "numLigne":g[1], "IsTerminus":g[2].split(" ")[0], "dir":g[2].split(" ")[2][0]}
-				else:
-					ctc={"NS":int(g[0].split(" ")[1]), "nomSommet":" ".join(g[0].split(" ")[2:]), "numLigne":g[1], "IsTerminus":g[2].split(" ")[0], "dir":g[2].split(" ")[1][0]}
-				sommets.append(ctc)
-				#{"NS":entier, "nomSommet":str, "numLigne":str, "NbBranchement":entier, "dir":entier}
-				#V 0017 Bastille ;5 ;False 
+			next(f)
 
-			elif (l[0]=='E'):
-				g=l.split(' ')
-				ctc={"S1": int(g[1]),"S2":int(g[2]), "poid":int(g[3][0:-1])}
-				#E 232 348 46
-				arrete.append(ctc)
-				#ARRETE : {"S1":entier, "S2":entier, "poid":entier}
-			print(ctc)
-
-def parse_position():
-	with open(data_position, 'r') as f:
+		# Parcourir le fichier
 		for l in f:
+			l = l.strip()  # Enlever les espaces et retours a la ligne inutiles
+			if l.startswith('V'):  # Si la ligne commence par 'V'
+				g = l.split(';')
+				dir_info = g[2].split(" ")[2][0] if len(g[2].split(" ")) > 2 else g[2].split(" ")[1][0]
+				ctc = {
+					"numSommet": int(g[0].split()[1]), 
+					"nomSommet": " ".join(g[0].split()[2:]), 
+					"numLigne": g[1], 
+					"isTerminus": g[2].split()[0], 
+					"direction": dir_info
+				}
+				sommets.append(ctc)  # Ajouter le sommet a la liste
+
+			elif l.startswith('E'):  # Si la ligne commence par 'E'
+				g = l.split()
+				ctc = {
+					"S1": int(g[1]), 
+					"S2": int(g[2]), 
+					"poid": int(g[3])
+				}
+				arretes.append(ctc)  # Ajouter l'arrete à la liste
+
+def parse_position(positions):
+	with open(data_position, 'r') as f: #ouverture du fichier pospoints.txt
+		for l in f: 
 			g=l.split(";")
-			position[g[2].replace("@", " ").replace("\n", "")]={"LAT":float(g[0]), "LONG":float(g[1])}
-
-parse_metro()
-parse_position()
-print(position)
-#print(sommets)
+			station_name = g[2].replace("@", " ").strip()
+			ctc={"nomSommet" : "".join(station_name), "LAT" : int(g[0]), "LONG" : int(g[1]) }
+			positions.append(ctc)
