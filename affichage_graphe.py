@@ -1,28 +1,27 @@
 import networkx as nx
 import matplotlib.pyplot as plt
+from matplotlib.widgets import Button
+import matplotlib.animation as animation
 import main
 import prim
 
 #listes
 sommets = [] 
 arretes = []
-arbre_couvrant = []
 #remplissage des listes
 main.parse_metro(sommets, arretes)
-prim.prim_algo(sommets, arretes, arbre_couvrant)
 # Créer un graphe vide
 graphe = nx.Graph()
 
-
-def creation_graph(arbre_couvrant, graphe) :
+def creation_graph() :
     for s in sommets :
         graphe.add_node(s['numSommet'], group=s['numLigne'])
-    for a in arbre_couvrant :
+    for a in arretes :
         graphe.add_edge(a['S1'], a['S2'])
 
     
 
-def afficher_graphe(graphe) :
+def afficher_graphe() :
     color_map = {
         '1': '#FFCE00',
         '2': '#0064B0',
@@ -45,12 +44,10 @@ def afficher_graphe(graphe) :
     pos = nx.kamada_kawai_layout(graphe)
 
     # Tracer le graphe
-    plt.figure(figsize=(20, 8))
+    plt.figure(figsize=(16, 8))
     nx.draw(graphe, pos, with_labels=True,  node_color=colors, edge_color="black", node_size=100, font_size=7)
-
-    # Afficher le graphe
     plt.show()
-                
 
-creation_graph(arbre_couvrant, graphe)
-afficher_graphe(graphe)
+
+creation_graph()
+afficher_graphe()

@@ -34,7 +34,7 @@ def parse_metro(sommets, arretes):
 				ctc = {
 					"S1": int(g[1]), 
 					"S2": int(g[2]), 
-					"poid": int(g[3])
+					"poids": int(g[3])
 				}
 				arretes.append(ctc)  # Ajouter l'arrete à la liste
 

@@ -32,12 +32,12 @@ def minimum(arretes_dispo) :
         print ("arretes vide")
         return -1
 
-    a_min = arretes_dispo[0]['poid']
+    a_min = arretes_dispo[0]['poids']
     indice = 0
 
     for i in range (1,len(arretes_dispo)) :
-        if(arretes_dispo[i]['poid'] < a_min) :
-            a_min = arretes_dispo[i]['poid']
+        if(arretes_dispo[i]['poids'] < a_min) :
+            a_min = arretes_dispo[i]['poids']
             indice = i
     return arretes_dispo[indice]
 
