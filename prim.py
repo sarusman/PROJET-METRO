@@ -3,7 +3,6 @@ def prim_algo(sommets, arretes, arbre_couvrant) :
     sommets_visites = []
     arretes_disponible = [] # les arretes disponlible
     sommets_visites.append(sommets[0]['numSommet']) # partir du premier sommet de la liste
-    a=0
     while (len(sommets) > len(sommets_visites)) :
         remplissage_arretes_dispo(sommets_visites[len(sommets_visites)-1], arretes_disponible, arretes, sommets_visites) # avoir les arretes disponible selon les nouveaux sommets decouvert
         arrete_minimum = minimum(arretes_disponible) # prendre l'indice le l'arrete la plus petite
@@ -19,7 +18,6 @@ def prim_algo(sommets, arretes, arbre_couvrant) :
             sommets_visites.append(arrete_minimum['S1'])
         arretes_disponible.remove(arrete_minimum)
         verif_arretes_dispo(sommets_visites, arretes_disponible, arretes) # verifie si les arretes disponible sont toujours disponible
-        a=a+1
 
     print("nombre de sommets visites : ",len(sommets_visites)) # 376 sommmets en tout
     print("nombre d'arretes de l'ACPM : ",len(arbre_couvrant))
