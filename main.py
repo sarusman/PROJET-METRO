@@ -8,7 +8,9 @@ data_position="src/pospoints.txt" #fichier avec les positions
 #Structure utiliser pour les positions : {"STATION": {"LAT": 14, "LONG": 43}}
 
 
-def parse_metro(sommets, arretes):
+def parse_metro():
+	sommets=[]
+	arretes=[]
 	with open(data_metro, 'r') as f:  # ouverture du fichier metro.txt
     # Ignorer les 13 premières lignes
 		for _ in range(13):
@@ -37,6 +39,7 @@ def parse_metro(sommets, arretes):
 					"poids": int(g[3])
 				}
 				arretes.append(ctc)  # Ajouter l'arrete à la liste
+	return [sommets, arretes]
 
 
 def parse_position(positions):
