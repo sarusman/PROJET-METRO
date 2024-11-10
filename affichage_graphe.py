@@ -4,18 +4,15 @@ from matplotlib.widgets import Button
 import main
 import affichage_prim
 
-#listes
-sommets = [] 
-arretes = []
 #remplissage des listes
-main.parse_metro(sommets, arretes)
+sommets, aretes = main.parse_metro()
 # Créer un graphe vide
 graphe = nx.Graph()
 
 def creation_graph() :
     for s in sommets :
         graphe.add_node(s['numSommet'], group=s['numLigne'])
-    for a in arretes :
+    for a in aretes :
         graphe.add_edge(a['S1'], a['S2'])
 
     

@@ -5,11 +5,11 @@ import prim
 
 #listes
 sommets = [] 
-arretes = []
+aretes = []
 arbre_couvrant = []
 #remplissage des listes
-main.parse_metro(sommets, arretes)
-prim.prim_algo(sommets, arretes, arbre_couvrant)
+sommets, aretes = main.parse_metro()
+prim.prim_algo(sommets, aretes, arbre_couvrant)
 # Créer un graphe vide
 graphe = nx.Graph()
 

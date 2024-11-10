@@ -1,16 +1,16 @@
 import pandas as pd
 
-data_metro="src/metro.txt" #fichier avec les donnees des sommets et des arretes
+data_metro="src/metro.txt" #fichier avec les donnees des sommets et des aretes
 data_position="src/pospoints.txt" #fichier avec les positions
 
 #Structure utiliser pour les sommets : {"NS":entier, "nomSommet":str, "numLigne":str, "NbBranchement":entier, "dir":entier}
-#Structure utiliser pour les arretes : {"S1":entier, "S2":entier, "poid":entier}
+#Structure utiliser pour les aretes : {"S1":entier, "S2":entier, "poid":entier}
 #Structure utiliser pour les positions : {"STATION": {"LAT": 14, "LONG": 43}}
 
 
 def parse_metro():
 	sommets=[]
-	arretes=[]
+	aretes=[]
 	with open(data_metro, 'r') as f:  # ouverture du fichier metro.txt
     # Ignorer les 13 premières lignes
 		for _ in range(13):
@@ -38,8 +38,8 @@ def parse_metro():
 					"S2": int(g[2]), 
 					"poids": int(g[3])
 				}
-				arretes.append(ctc)  # Ajouter l'arrete à la liste
-	return [sommets, arretes]
+				aretes.append(ctc)  # Ajouter l'arete à la liste
+	return [sommets, aretes]
 
 
 def parse_position(positions):
