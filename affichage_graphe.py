@@ -1,9 +1,8 @@
 import networkx as nx
 import matplotlib.pyplot as plt
 from matplotlib.widgets import Button
-import matplotlib.animation as animation
 import main
-import prim
+import affichage_prim
 
 #listes
 sommets = [] 
@@ -42,10 +41,18 @@ def afficher_graphe() :
     }
     colors = [color_map[graphe.nodes[node]['group']] for node in graphe.nodes]
     pos = nx.kamada_kawai_layout(graphe)
-
     # Tracer le graphe
-    plt.figure(figsize=(16, 8))
+    fig = plt.figure(figsize=(16, 8))
     nx.draw(graphe, pos, with_labels=True,  node_color=colors, edge_color="black", node_size=100, font_size=7)
+    
+    # Fonction de callback pour le bouton
+    def on_button_clicked(event):
+        affichage_prim.afficher_graphe()
+
+    # Créer le bouton
+    button_ax = plt.axes([0.4, 0.05, 0.2, 0.075])  
+    button = Button(button_ax, 'Afficher l\'ACPM')
+    button.on_clicked(on_button_clicked)
     plt.show()
 
 

@@ -22,7 +22,8 @@ def creation_graph(arbre_couvrant, graphe) :
 
     
 
-def afficher_graphe(graphe) :
+def afficher_graphe() :
+    
     color_map = {
         '1': '#FFCE00',
         '2': '#0064B0',
@@ -51,6 +52,6 @@ def afficher_graphe(graphe) :
     # Afficher le graphe
     plt.show()
                 
-
 creation_graph(arbre_couvrant, graphe)
-afficher_graphe(graphe)
+
+#afficher_graphe(graphe)
