@@ -45,5 +45,3 @@ def parse_position(positions):
 			station_name = g[2].replace("@", " ").strip()
 			ctc={"nomSommet" : "".join(station_name), "LAT" : int(g[0]), "LONG" : int(g[1]) }
 			positions.append(ctc)
-
-
