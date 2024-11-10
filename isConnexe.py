@@ -29,9 +29,8 @@ def createGraph(listSommets, arretes):
 
 # Algo de test de connxité : parcours en profondeur; Pour tester s'il est connexe, on lance le DFS depuis 
 # le premier sommet et on doit s'attendre a obtenir tout les sommets dans le résultat
+# retoune les sommets visités depuis un sommet
 
-
-# retoune les sommet visiter depuis un sommet
 def parcoursProfondeur(graphe, depart):
 	pile=[depart]
 	visiter=[]
