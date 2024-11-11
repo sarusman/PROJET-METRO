@@ -1,1 +1,6 @@
-pandas==1.3.3
+folium
+psycopg2
+jinja2
+branca
+PyQt5
+PyQtWebEngine

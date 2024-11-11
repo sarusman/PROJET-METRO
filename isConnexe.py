@@ -1,9 +1,7 @@
-import main
+import parser
 
 # {'S1': 243, 'S2': 244, 'poid': 240}
 # {'numSommet': 339, 'nomSommet': 'Stalingrad', 'numLigne': '2 ', 'isTerminus': 'False', 'direction': '0'}
-
-res=main.parse_metro()
 
 # Il suffit de faire un parcours en profondeur
 
@@ -47,14 +45,19 @@ def parcoursProfondeur(graphe, depart):
 # verifie si tout les sommets sont dans le résultat : si oui, alors il n'y qu'une seul composante connexe (donc graphe connexe)
 # Si non, le graphe n'est pas connexe
 def check(sommets, resultat):
-	print(sorted(resultat))
 	return sorted(sommets)==sorted(resultat)
 
 
-sommets=getListeSommet(res[0])
-graphe=createGraph(sommets, res[1])
-res=parcoursProfondeur(graphe, 0)
-print(check(sommets, res))
+def main():
+	res=parser.parse_metro()
+	sommets=getListeSommet(res[0])
+	graphe=createGraph(sommets, res[1])
+	res=parcoursProfondeur(graphe, 0)
+	if (check(sommets, res)):
+		return ("Le graphe est connexe")
+	else:
+		return ("Le graphe n'est pas connexe")
+
 
 
 
