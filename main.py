@@ -47,20 +47,20 @@ class MapWindow(tk.Tk):
         self.prim_btn=tk.Button(top_frame, text='AFFICHER PRIM', command=self.affiche_prim)
         self.prim_btn.pack(side=tk.LEFT, padx=5)
 
-        # Étiquette pour le statut de connexité
+        # Étiquette pour la onnexité
         self.conn=tk.Label(self, text=isConnexe.main())
         self.conn.pack(pady=10)
 
-        # Affichage de la carte statique
+        # Affichage de la carte
         self.display_static_map()
 
     def display_static_map(self):
         # Charger l'image originale On doit faire une remise a l'échelle
-        self.image=Image.open("src/metrof_r.png")  # Remplacez par le chemin de l'image de la carte
+        self.image=Image.open("src/metrof_r.png")
         width, height=self.image.size
 
-        # Redimensionner l'image
-        self.image=self.image.resize((987-100, 987-100-15), Image.LANCZOS)  # Ajuster la taille de l'image
+        # Redimens l'image
+        self.image=self.image.resize((987-100, 987-100-15), Image.LANCZOS)
         w, h=self.image.size
 
         # remise a l'échelle
@@ -120,6 +120,7 @@ class MapWindow(tk.Tk):
             res+=action+" "
         self.chem = tk.Label(self, text=res)
         self.chem.place(relx=0.0, y=35, anchor='nw')
+        print(res)
         print(depart, destination)
 
 # Exécution de l'application
