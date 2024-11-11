@@ -76,6 +76,7 @@ class MapWindow(tk.Tk):
         self.canvas_image=self.canvas.create_image(0, 0, anchor='nw', image=self.image_tk)
 
 
+    # Pour trouver et afficher les meilleurs chemin avec prim
     def affiche_prim(self):
         resultat=prim.prim_algo(self.sommets, self.arretes)
         for arrete in resultat:
@@ -92,6 +93,7 @@ class MapWindow(tk.Tk):
                 pass
         print(resultat)
 
+    # Pour trouver et afficher le chemin bellman
     def go(self):
         # Effacer les anciennes lignes avant de tracer le nouveau chemin
         self.canvas.delete('chem')
