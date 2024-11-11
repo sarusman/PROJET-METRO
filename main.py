@@ -25,8 +25,6 @@ class MapWindow(tk.Tk):
         self.gares=parser.getListeGares(self.sommets)
         self.positions=parser.parse_position(self.sommets)
 
-        print(self.positions)
-
         # Layout principal
         self.layout_widgets()
 

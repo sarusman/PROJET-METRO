@@ -64,5 +64,4 @@ def parse_position(sommets):
                 positions[nmSommet] = {"LAT": int(g[0]), "LONG": int(g[1])}
                 vt.add(nmSommet)
 
-    print(positions)
     return positions
