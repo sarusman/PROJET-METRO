@@ -109,6 +109,7 @@ class Graph:
                     queue.append((voisin, distance + 1))
         return float('inf')
 
+
     def itineraire_pcc(self, nom_depart, nom_destination):
         depart = self.trouver_station_par_nom(nom_depart)
         destination = self.trouver_station_par_nom(nom_destination)
@@ -143,6 +144,7 @@ class Graph:
         # Ajouter la station de départ en premier
         itineraire.append({
             "station": depart.nom_sommet,
+            "numSommet": current_station.num_sommet,
             "action": f"Vous êtes à {depart.nom_sommet}."
         })
 
@@ -169,16 +171,19 @@ class Graph:
                     terminus = self.trouver_terminus(current_station.numero_ligne, current_station, destination)
                     itineraire.append({
                         "station": current_station.nom_sommet,
-                        "action": f"- Prenez la ligne {current_station.numero_ligne} direction {terminus}."
+                        "action": f"- Prenez la ligne {current_station.numero_ligne} direction {terminus}.",
+                        "numSommet": current_station.num_sommet,
                     })
 
         # Ajouter la dernière étape (arrivée)
         itineraire.append({
             "station": destination.nom_sommet,
+            "numSommet": current_station.num_sommet,
             "action": f"- Vous devriez arriver à {destination.nom_sommet} dans environ {duree_totale // 60} minutes."
         })
 
-        return afficher_itineraire(itineraire)
+        return itineraire
+
 
 def afficher_itineraire(itineraire):
     output = []

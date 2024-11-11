@@ -46,10 +46,23 @@ def getListeGares(sommets):
 	return res
 
 
-def parse_position(positions):
-	with open(data_position, 'r') as f: #ouverture du fichier pospoints.txt
-		for l in f: 
-			g=l.split(";")
-			station_name = g[2].replace("@", " ").strip()
-			ctc={"nomSommet" : "".join(station_name), "LAT" : int(g[0]), "LONG" : int(g[1]) }
-			positions.append(ctc)
+def getSommetNum(nom, sommets, used_sommets):
+    for i in sommets:
+        if i["nomSommet"] == nom and i["numSommet"] not in used_sommets:
+            return i["numSommet"]
+    return None
+
+def parse_position(sommets):
+    positions = {}
+    used_sommets = set()
+    with open(data_position, 'r') as f:
+        for l in f:
+            g = l.strip().split(";")
+            station_name = g[2].replace("@", " ").strip()
+            nmSommet = getSommetNum(station_name, sommets, used_sommets)
+            if nmSommet is not None:
+                positions[nmSommet] = {"LAT": int(g[0]), "LONG": int(g[1])}
+                used_sommets.add(nmSommet)
+
+    print(positions)
+    return positions

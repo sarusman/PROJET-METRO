@@ -1,5 +1,6 @@
 # Algorithme de Prim
-def prim_algo(sommets, arretes, arbre_couvrant) :
+def prim_algo(sommets, arretes) :
+    arbre_couvrant=[]
     sommets_visites = []
     arretes_disponible = [] # les arretes disponlible
     sommets_visites.append(sommets[0]['numSommet']) # partir du premier sommet de la liste
@@ -19,6 +20,7 @@ def prim_algo(sommets, arretes, arbre_couvrant) :
         arretes_disponible.remove(arrete_minimum)
         verif_arretes_dispo(sommets_visites, arretes_disponible, arretes) # verifie si les arretes disponible sont toujours disponible
 
+    return arbre_couvrant
     print("nombre de sommets visites : ",len(sommets_visites)) # 376 sommmets en tout
     print("nombre d'arretes de l'ACPM : ",len(arbre_couvrant))
     print("nombre de doublons de sommets visites: ",len(sommets_visites) - len(set(sommets_visites)))

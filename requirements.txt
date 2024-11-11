@@ -1,6 +1,1 @@
-folium
-psycopg2
-jinja2
-branca
-PyQt5
-PyQtWebEngine
+Pillow==11.0.0
