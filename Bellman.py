@@ -30,11 +30,11 @@ class Graph:
         self.stations = {}
 
     def ajouter_station(self, ligne):
-        match = re.match(r"V\s+(\d+)\s+(.+?)\s*;\s*(\d+)\s*;\s*(True|False)\s*(\d+)", ligne)
+        match = re.match(r"V\s+(\d+)\s+(.+?)\s*;\s*([\d\w]+)\s*;\s*(True|False)\s*(\d+)", ligne)
         if match:
             num_sommet = int(match.group(1))
             nom_sommet = match.group(2).strip()
-            numero_ligne = int(match.group(3))
+            numero_ligne = match.group(3)
             est_terminus = match.group(4) == "True"
             branchement = int(match.group(5))
             station = Station(num_sommet, nom_sommet, numero_ligne, est_terminus, branchement)
@@ -113,7 +113,6 @@ class Graph:
     def itineraire_pcc(self, nom_depart, nom_destination):
         depart = self.trouver_station_par_nom(nom_depart)
         destination = self.trouver_station_par_nom(nom_destination)
-
         if not depart or not destination:
             return "Station de départ ou de destination introuvable."
 
