@@ -1,6 +1,6 @@
 import networkx as nx
 import matplotlib.pyplot as plt
-from matplotlib.widgets import Button
+from matplotlib.patches import Patch
 import parser
 import affichage_prim
 
@@ -42,4 +42,6 @@ def afficher_graphe() :
     # Tracer le graphe
     fig = plt.figure(figsize=(16, 8))
     nx.draw(graphe, pos, with_labels=True,  node_color=colors, edge_color="black", node_size=90, font_size=6)
+    legend_elements = [Patch(facecolor=color, label=f' {ligne}') for ligne, color in color_map.items()]
+    plt.legend(handles=legend_elements, title="Lignes du métro", loc="upper right", fontsize="small")
     plt.show()
