@@ -1,7 +1,8 @@
 import parser, prim
 from Bellman import Graph
 import isConnexe
-
+import affichage_prim
+import affichage_graphe
 import tkinter as tk
 from tkinter import ttk
 from PIL import Image, ImageTk
@@ -44,9 +45,11 @@ class MapWindow(tk.Tk):
         # Boutons
         self.go_button=tk.Button(top_frame, text='GO', command=self.go)
         self.go_button.pack(side=tk.LEFT, padx=5)
-        self.prim_btn=tk.Button(top_frame, text='AFFICHER l\'ACPM SUR LA CARTE', command=self.affiche_prim)
+        self.prim_btn=tk.Button(top_frame, text='AFFICHER L\'ACPM SUR LA CARTE', command=self.affiche_prim)
         self.prim_btn.pack(side=tk.LEFT, padx=5)
-        self.prim_btn=tk.Button(top_frame, text='AFFICHER PRIM', command=self.affiche_prim)
+        self.prim_btn=tk.Button(top_frame, text='AFFICHER L\'ACPM', command=affichage_prim.afficher_graphe)
+        self.prim_btn.pack(side=tk.LEFT, padx=5)
+        self.prim_btn=tk.Button(top_frame, text='AFFICHER LE GRAPHE', command=affichage_graphe.afficher_graphe)
         self.prim_btn.pack(side=tk.LEFT, padx=5)
 
         # Étiquette pour la onnexité

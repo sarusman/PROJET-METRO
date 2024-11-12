@@ -1,29 +1,24 @@
 import networkx as nx
 import matplotlib.pyplot as plt
-import main
-import prim
+from matplotlib.widgets import Button
+import parser
+import affichage_prim
 
-#listes
-sommets = [] 
-aretes = []
-arbre_couvrant = []
 #remplissage des listes
-sommets, aretes = main.parse_metro()
-prim.prim_algo(sommets, aretes, arbre_couvrant)
+sommets, aretes = parser.parse_metro()
 # Créer un graphe vide
 graphe = nx.Graph()
 
-
-def creation_graph(arbre_couvrant, graphe) :
+def creation_graph() :
     for s in sommets :
         graphe.add_node(s['numSommet'], group=s['numLigne'])
-    for a in arbre_couvrant :
+    for a in aretes :
         graphe.add_edge(a['S1'], a['S2'])
 
     
 
 def afficher_graphe() :
-    
+    creation_graph()
     color_map = {
         '1': '#FFCE00',
         '2': '#0064B0',
@@ -44,14 +39,7 @@ def afficher_graphe() :
     }
     colors = [color_map[graphe.nodes[node]['group']] for node in graphe.nodes]
     pos = nx.kamada_kawai_layout(graphe)
-
     # Tracer le graphe
-    plt.figure(figsize=(20, 8))
-    nx.draw(graphe, pos, with_labels=True,  node_color=colors, edge_color="black", node_size=100, font_size=7)
-
-    # Afficher le graphe
+    fig = plt.figure(figsize=(16, 8))
+    nx.draw(graphe, pos, with_labels=True,  node_color=colors, edge_color="black", node_size=90, font_size=6)
     plt.show()
-                
-creation_graph(arbre_couvrant, graphe)
-
-#afficher_graphe(graphe)
