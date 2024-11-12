@@ -44,6 +44,8 @@ class MapWindow(tk.Tk):
         # Boutons
         self.go_button=tk.Button(top_frame, text='GO', command=self.go)
         self.go_button.pack(side=tk.LEFT, padx=5)
+        self.prim_btn=tk.Button(top_frame, text='AFFICHER l\'ACPM SUR LA CARTE', command=self.affiche_prim)
+        self.prim_btn.pack(side=tk.LEFT, padx=5)
         self.prim_btn=tk.Button(top_frame, text='AFFICHER PRIM', command=self.affiche_prim)
         self.prim_btn.pack(side=tk.LEFT, padx=5)
 
