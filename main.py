@@ -35,8 +35,9 @@ class MapWindow(tk.Tk):
         top_frame.pack(pady=10)
 
         # Selecteurs de gare (ComboBox)
-        self.selector1=ttk.Combobox(top_frame, values=["Choisir la gare de départ"] + self.gares)
-        self.selector2=ttk.Combobox(top_frame, values=["Choisir la gare d'arrivée"] + self.gares)
+        stations_uniques = list(set(self.gares))
+        self.selector1=ttk.Combobox(top_frame, values=["Choisir la gare de départ"] + stations_uniques)
+        self.selector2=ttk.Combobox(top_frame, values=["Choisir la gare d'arrivée"] + stations_uniques)
         self.selector1.set("Choisir la gare de départ")
         self.selector2.set("Choisir la gare d'arrivée")
         self.selector1.pack(side=tk.LEFT, padx=5)
