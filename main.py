@@ -76,6 +76,9 @@ class MapWindow(tk.Tk):
 
     # Pour trouver et afficher les meilleurs chemin avec prim
     def affiche_prim(self):
+        parsed=parser.parse_metro()
+        self.sommets=parsed[0]
+        self.arretes=parsed[1]
         resultat=prim.prim_algo(self.sommets, self.arretes)
         for arrete in resultat:
             try:
