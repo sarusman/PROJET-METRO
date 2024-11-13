@@ -25,7 +25,7 @@ class MapWindow(tk.Tk):
         self.chem = tk.Label(self, text="")
         self.gares=parser.getListeGares(self.sommets)
         self.positions=parser.parse_position(self.sommets)
-
+        self.NomNumsommet=parser.NomNumsommet(self.sommets)
         # Layout principal
         self.layout_widgets()
 
@@ -91,11 +91,11 @@ class MapWindow(tk.Tk):
                 x1, y1=self.positions[arrete["S1"]]["LAT"], self.positions[arrete["S1"]]["LONG"]
                 x2, y2=self.positions[arrete["S2"]]["LAT"], self.positions[arrete["S2"]]["LONG"]
                 # Ajuster les coordonnées en fonction du redimensionnement
-                x1_scaled=x1*self.scale_x
-                y1_scaled=y1*self.scale_y
-                x2_scaled=x2*self.scale_x
-                y2_scaled=y2*self.scale_y
-                self.canvas.create_line(x1_scaled, y1_scaled, x2_scaled, y2_scaled, fill="red", width=3, tags="prim")
+                x1_old=x1*self.scale_x
+                y1_old=y1*self.scale_y
+                x2_old=x2*self.scale_x
+                y2_old=y2*self.scale_y
+                self.canvas.create_line(x1_old, y1_old, x2_old, y2_old, fill="red", width=3, tags="prim")
             except :
                 pass
         print(resultat)
@@ -106,29 +106,41 @@ class MapWindow(tk.Tk):
         self.canvas.delete('chem')
         self.canvas.delete('prim')
         self.chem.destroy()
+        ##
+
         depart=self.selector1.get()
         destination=self.selector2.get()
         resultat=self.bellman.itineraire_pcc(depart, destination)
         previous_numSommet=None
+        t=0
+        print(resultat)
         for step in resultat:
-            numSommet=step.get('numSommet')
-            if numSommet is not None:
-                x, y=self.positions[numSommet]["LAT"], self.positions[numSommet]["LONG"]
-                # Ajuster les coordonnées en fonction du redimensionnement
-                x_scaled=x*self.scale_x
-                y_scaled=y*self.scale_y
-                if previous_numSommet is not None:
-                    x_prev, y_prev=self.positions[previous_numSommet]["LAT"], self.positions[previous_numSommet]["LONG"]
-                    x_prev_scaled=x_prev*self.scale_x
-                    y_prev_scaled=y_prev*self.scale_y
-                    self.canvas.create_line(x_prev_scaled, y_prev_scaled, x_scaled, y_scaled, fill="blue", width=3, tags='chem')
-                previous_numSommet=numSommet
+            if (t>0): # Sinon on relie le départ et l'arrivé
+                numSommet=step.get('numSommet')
+                if numSommet is None:
+                    station_=step.get('station')
+                    if station_ and station_ in self.NomNumsommet:
+                        numSommet = self.NomNumsommet[station_]
+
+                if (numSommet is not None):
+                        x, y=self.positions[numSommet]["LAT"], self.positions[numSommet]["LONG"]
+                        # Ajuster les coordonnées en fonction du redimensionnement
+                        x_old=x*self.scale_x
+                        y_old=y*self.scale_y
+                        if previous_numSommet is not None:
+                            x_prev, y_prev=self.positions[previous_numSommet]["LAT"], self.positions[previous_numSommet]["LONG"]
+                            x_prev_old=x_prev*self.scale_x
+                            y_prev_old=y_prev*self.scale_y
+                            self.canvas.create_line(x_prev_old, y_prev_old, x_old, y_old, fill="blue", width=3, tags='chem')
+                        previous_numSommet=numSommet
+            t+=1
         res=""
         for etape in resultat:
             action = etape.get('action', '')
             res+=action+" "
         self.chem = tk.Label(self, text=res)
         self.chem.place(relx=0.0, y=35, anchor='nw')
+        print("MEILLEUR CHEMIN : ")
         print(res)
         print(depart, destination)
 

@@ -52,6 +52,12 @@ def getSommetNum(nom, sommets, vt):
             return i["numSommet"]
     return None
 
+def NomNumsommet(sommets):
+	res={}
+	for sommet in sommets:
+		res[sommet["nomSommet"]]=sommet["numSommet"]
+	return res
+
 def parse_position(sommets):
     positions = {}
     vt = set()
