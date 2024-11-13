@@ -10,7 +10,7 @@ from PIL import Image, ImageTk
 class MapWindow(tk.Tk):
     def __init__(self):
         super().__init__()
-        self.title('Map Application')
+        self.title('Projet Metro')
         self.geometry('800x600')
         
         # Charger les données du graphe
