@@ -25,7 +25,10 @@ class MapWindow(tk.Tk):
         self.chem = tk.Label(self, text="")
         self.gares=parser.getListeGares(self.sommets)
         self.positions=parser.parse_position(self.sommets)
+        print(self.positions)
         self.NomNumsommet=parser.NomNumsommet(self.sommets)
+        self.NumNomsommet=parser.NumNomsommet(self.sommets)
+        self.depArr=True
         # Layout principal
         self.layout_widgets()
 
@@ -78,6 +81,26 @@ class MapWindow(tk.Tk):
         self.canvas=tk.Canvas(self, width=w, height=h)
         self.canvas.pack()
         self.canvas_image=self.canvas.create_image(0, 0, anchor='nw', image=self.image_tk)
+        self.canvas.bind("<Button-1>", self.getstationProche)
+
+    def getstationProche(self, event):
+        x = event.x / self.scale_x
+        y = event.y / self.scale_y
+        res = None
+        dist = float('inf')
+        for sommet in self.positions:
+            lat = self.positions[sommet]["LAT"]
+            long = self.positions[sommet]["LONG"]
+            current_dist = ((lat - x)**2 + (long - y)**2)**0.5
+            if current_dist < dist:
+                dist = current_dist
+                res = sommet
+        if self.depArr:
+            self.selector1.set(self.NumNomsommet[res])
+        else:
+            self.selector2.set(self.NumNomsommet[res])
+        self.depArr = not self.depArr
+
 
 
     # Pour trouver et afficher les meilleurs chemin avec prim

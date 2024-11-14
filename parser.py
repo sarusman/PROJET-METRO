@@ -58,6 +58,12 @@ def NomNumsommet(sommets):
 		res[sommet["nomSommet"]]=sommet["numSommet"]
 	return res
 
+def NumNomsommet(sommets):
+	res={}
+	for sommet in sommets:
+		res[sommet["numSommet"]]=sommet["nomSommet"]
+	return res
+
 def parse_position(sommets):
     positions = {}
     vt = set()
