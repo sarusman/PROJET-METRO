@@ -22,7 +22,7 @@ class MapWindow(tk.Tk):
         parsed=parser.parse_metro()
         self.sommets=parsed[0]
         self.arretes=parsed[1]
-        self.chem = tk.Label(self, text="")
+        self.chem=tk.Label(self, text="")
         self.gares=parser.getListeGares(self.sommets)
         self.positions=parser.parse_position(self.sommets)
         print(self.positions)
@@ -38,7 +38,7 @@ class MapWindow(tk.Tk):
         top_frame.pack(pady=10)
 
         # Selecteurs de gare (ComboBox)
-        stations_uniques = list(set(self.gares))
+        stations_uniques=list(set(self.gares))
         self.selector1=ttk.Combobox(top_frame, values=["Choisir la gare de départ"] + stations_uniques)
         self.selector2=ttk.Combobox(top_frame, values=["Choisir la gare d'arrivée"] + stations_uniques)
         self.selector1.set("Choisir la gare de départ")
@@ -84,22 +84,22 @@ class MapWindow(tk.Tk):
         self.canvas.bind("<Button-1>", self.getstationProche)
 
     def getstationProche(self, event):
-        x = event.x / self.scale_x
-        y = event.y / self.scale_y
-        res = None
-        dist = float('inf')
+        x=event.x / self.scale_x
+        y=event.y / self.scale_y
+        res=None
+        dist=float('inf')
         for sommet in self.positions:
-            lat = self.positions[sommet]["LAT"]
-            long = self.positions[sommet]["LONG"]
-            current_dist = ((lat - x)**2 + (long - y)**2)**0.5
+            lat=self.positions[sommet]["LAT"]
+            long=self.positions[sommet]["LONG"]
+            current_dist=((lat - x)**2 + (long - y)**2)**0.5
             if current_dist < dist:
-                dist = current_dist
-                res = sommet
+                dist=current_dist
+                res=sommet
         if self.depArr:
             self.selector1.set(self.NumNomsommet[res])
         else:
             self.selector2.set(self.NumNomsommet[res])
-        self.depArr = not self.depArr
+        self.depArr=not self.depArr
 
 
 
@@ -143,7 +143,7 @@ class MapWindow(tk.Tk):
                 if numSommet is None:
                     station_=step.get('station')
                     if station_ and station_ in self.NomNumsommet:
-                        numSommet = self.NomNumsommet[station_]
+                        numSommet=self.NomNumsommet[station_]
 
                 if (numSommet is not None):
                         x, y=self.positions[numSommet]["LAT"], self.positions[numSommet]["LONG"]
@@ -159,9 +159,9 @@ class MapWindow(tk.Tk):
             t+=1
         res=""
         for etape in resultat:
-            action = etape.get('action', '')
+            action=etape.get('action', '')
             res+=action+" "
-        self.chem = tk.Label(self, text=res)
+        self.chem=tk.Label(self, text=res)
         self.chem.place(relx=0.0, y=35, anchor='nw')
         print("MEILLEUR CHEMIN : ")
         print(res)
