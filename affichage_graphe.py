@@ -9,6 +9,7 @@ sommets, aretes = parser.parse_metro()
 # Créer un graphe vide
 graphe = nx.Graph()
 
+# creation du graphe
 def creation_graph() :
     for s in sommets :
         graphe.add_node(s['numSommet'], group=s['numLigne'])
@@ -16,9 +17,10 @@ def creation_graph() :
         graphe.add_edge(a['S1'], a['S2'])
 
     
-
+# affichage du graphe dans une nouvelle fenetre
 def afficher_graphe() :
     creation_graph()
+    # couleurs des lignes du metro
     color_map = {
         '1': '#FFCE00',
         '2': '#0064B0',
@@ -38,6 +40,7 @@ def afficher_graphe() :
         '14' : '#662483'
     }
     colors = [color_map[graphe.nodes[node]['group']] for node in graphe.nodes]
+    # application de l'algo de Kamada-Kawai pour un meilleur affichage graphique
     pos = nx.kamada_kawai_layout(graphe)
     # Tracer le graphe
     fig = plt.figure(figsize=(16, 8))
