@@ -168,32 +168,6 @@ class MapWindow(tk.Tk):
         print(res)
 
 
-    def getFullTrajet(self, itineraire):
-        res = []
-        if not itineraire:
-            return res
-        if (itineraire[0].get("nomSommet")):
-            prev=itineraire[0]["nomSommet"]
-        else:
-            prev=self.NumNomsommet[itineraire[0]["numSommet"]]
-        t=0
-        for step in itineraire:
-            if t>0:
-                try:
-                    if (not step.get("nomSommet")):
-                        smn=self.NumNomsommet[step["numSommet"]]
-                    else:
-                        smn=step["nomSommet"]
-                    res.append(self.bellman.itineraire_pcc(prev, smn))
-                    prev=smn
-                except:
-                    pass
-            t+=1
-
-        return res
-
-
-
 # Exécution de l'application
 if __name__ == '__main__':
     app=MapWindow()

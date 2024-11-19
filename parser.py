@@ -6,6 +6,7 @@ data_position="src/pospoints.txt" #fichier avec les positions
 #Structure utiliser pour les positions : {"STATION": {"LAT": 14, "LONG": 43}}
 
 
+# Parse le fichier contenant les sommets et arêtes du réseau de métro.
 def parse_metro():
 	sommets=[]
 	arretes=[]
@@ -39,31 +40,37 @@ def parse_metro():
 				arretes.append(ctc)  # Ajouter l'arrete à la liste
 	return [sommets, arretes]
 
+# Retourne la liste des noms de toute les stations.
 def getListeGares(sommets):
 	res=[]
 	for i in sommets:
 		res.append(i["nomSommet"])
 	return res
 
-
+# Retourne le numéro d'un sommet à partir de son nom s'il n'est pas déjà visité.
 def getSommetNum(nom, sommets, vt):
     for i in sommets:
         if i["nomSommet"] == nom and i["numSommet"] not in vt:
             return i["numSommet"]
     return None
 
+# Retourne un dictionnaire des noms de stations associés à leurs numéros
 def NomNumsommet(sommets):
 	res={}
 	for sommet in sommets:
 		res[sommet["nomSommet"]]=sommet["numSommet"]
 	return res
 
+
+# Retourne un dictionnaire des numéros de stations associés à leur noms
 def NumNomsommet(sommets):
 	res={}
 	for sommet in sommets:
 		res[sommet["numSommet"]]=sommet["nomSommet"]
 	return res
 
+
+# Parse le fichier contenant les positions géographiques des stations.
 def parse_position(sommets):
     positions = {}
     vt = set()
