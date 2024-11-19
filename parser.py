@@ -77,3 +77,10 @@ def parse_position(sommets):
                 vt.add(nmSommet)
 
     return positions
+
+
+
+
+
+
+

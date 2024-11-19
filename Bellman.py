@@ -1,5 +1,6 @@
 import re
 import heapq
+import parser
 
 class Station:
     def __init__(self, num_sommet, nom_sommet, numero_ligne, est_terminus, branchement):

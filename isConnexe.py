@@ -29,7 +29,7 @@ def createGraph(listSommets, arretes):
 # le premier sommet et on doit s'attendre a obtenir tout les sommets dans le résultat
 
 
-# retoune les sommet visiter depuis un sommet
+# retoune les sommets visités depuis un sommet
 def parcoursProfondeur(graphe, depart):
 	pile=[depart]
 	visiter=[]

@@ -12,8 +12,9 @@ class MapWindow(tk.Tk):
         super().__init__()
         self.title('Projet Metro')
         self.geometry('800x600')
-        
-        # Charger les données du graphe
+        self.attributes('-fullscreen', True)
+
+        # Charger les données du graphe pour appliquer l'algo de Bellmann
         self.bellman=Graph()
         if self.bellman.charger_fichier("src/metro.txt"):
             print("Chargement des données de métro terminé.")
@@ -25,7 +26,6 @@ class MapWindow(tk.Tk):
         self.chem=tk.Label(self, text="")
         self.gares=parser.getListeGares(self.sommets)
         self.positions=parser.parse_position(self.sommets)
-        print(self.positions)
         self.NomNumsommet=parser.NomNumsommet(self.sommets)
         self.NumNomsommet=parser.NumNomsommet(self.sommets)
         self.depArr=True
@@ -33,11 +33,14 @@ class MapWindow(tk.Tk):
         self.layout_widgets()
 
     def layout_widgets(self):
-        # Layout supérieur pour les sélecteurs et les boutons
+        # Selecteur de bouton
         top_frame=tk.Frame(self)
         top_frame.pack(pady=10)
 
-        # Selecteurs de gare (ComboBox)
+
+        self.style = ttk.Style()
+        self.style.configure('TCombobox', foreground='black') # COULEUR TEXTE EN NOIR
+
         stations_uniques=list(set(self.gares))
         self.selector1=ttk.Combobox(top_frame, values=["Choisir la gare de départ"] + stations_uniques)
         self.selector2=ttk.Combobox(top_frame, values=["Choisir la gare d'arrivée"] + stations_uniques)
@@ -121,7 +124,6 @@ class MapWindow(tk.Tk):
                 self.canvas.create_line(x1_old, y1_old, x2_old, y2_old, fill="red", width=3, tags="prim")
             except :
                 pass
-        print(resultat)
 
     # Pour trouver et afficher le chemin bellman
     def go(self):
@@ -136,7 +138,6 @@ class MapWindow(tk.Tk):
         resultat=self.bellman.itineraire_pcc(depart, destination)
         previous_numSommet=None
         t=0
-        print(resultat)
         for step in resultat:
             if (t>0): # Sinon on relie le départ et l'arrivé
                 numSommet=step.get('numSommet')
@@ -165,7 +166,33 @@ class MapWindow(tk.Tk):
         self.chem.place(relx=0.0, y=35, anchor='nw')
         print("MEILLEUR CHEMIN : ")
         print(res)
-        print(depart, destination)
+
+
+    def getFullTrajet(self, itineraire):
+        res = []
+        if not itineraire:
+            return res
+        if (itineraire[0].get("nomSommet")):
+            prev=itineraire[0]["nomSommet"]
+        else:
+            prev=self.NumNomsommet[itineraire[0]["numSommet"]]
+        t=0
+        for step in itineraire:
+            if t>0:
+                try:
+                    if (not step.get("nomSommet")):
+                        smn=self.NumNomsommet[step["numSommet"]]
+                    else:
+                        smn=step["nomSommet"]
+                    res.append(self.bellman.itineraire_pcc(prev, smn))
+                    prev=smn
+                except:
+                    pass
+            t+=1
+
+        return res
+
+
 
 # Exécution de l'application
 if __name__ == '__main__':
