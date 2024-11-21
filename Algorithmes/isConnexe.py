@@ -1,4 +1,4 @@
-import parser
+from . import parser
 
 # {'S1': 243, 'S2': 244, 'poid': 240}
 # {'numSommet': 339, 'nomSommet': 'Stalingrad', 'numLigne': '2 ', 'isTerminus': 'False', 'direction': '0'}

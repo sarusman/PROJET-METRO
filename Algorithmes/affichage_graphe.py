@@ -1,26 +1,24 @@
 import networkx as nx
 import matplotlib.pyplot as plt
 from matplotlib.patches import Patch
-import parser
-import prim
+from . import parser, affichage_prim
 
 #remplissage des listes
 sommets, aretes = parser.parse_metro()
-arbre_couvrant = prim.prim_algo(sommets, aretes)
 # Créer un graphe vide
 graphe = nx.Graph()
 
 # creation du graphe
-def creation_graph(arbre_couvrant, graphe) :
+def creation_graph() :
     for s in sommets :
         graphe.add_node(s['numSommet'], group=s['numLigne'])
-    for a in arbre_couvrant :
+    for a in aretes :
         graphe.add_edge(a['S1'], a['S2'])
 
     
 # affichage du graphe dans une nouvelle fenetre
 def afficher_graphe() :
-    creation_graph(arbre_couvrant, graphe)
+    creation_graph()
     # couleurs des lignes du metro
     color_map = {
         '1': '#FFCE00',
@@ -43,14 +41,9 @@ def afficher_graphe() :
     colors = [color_map[graphe.nodes[node]['group']] for node in graphe.nodes]
     # application de l'algo de Kamada-Kawai pour un meilleur affichage graphique
     pos = nx.kamada_kawai_layout(graphe)
-
     # Tracer le graphe
-    plt.figure(figsize=(16, 8))
+    fig = plt.figure(figsize=(16, 8))
     nx.draw(graphe, pos, with_labels=True,  node_color=colors, edge_color="black", node_size=90, font_size=6)
-
     legend_elements = [Patch(facecolor=color, label=f' {ligne}') for ligne, color in color_map.items()]
     plt.legend(handles=legend_elements, title="Lignes du métro", loc="upper right", fontsize="small")
-
-    # Afficher le graphe
     plt.show()
-            

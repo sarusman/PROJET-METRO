@@ -1,8 +1,5 @@
-import parser, prim
-from Bellman import Graph
-import isConnexe
-import affichage_prim
-import affichage_graphe
+from Algorithmes.Bellman import Graph
+from Algorithmes import isConnexe, parser, prim, affichage_prim, affichage_graphe
 import tkinter as tk
 from tkinter import ttk
 from PIL import Image, ImageTk
